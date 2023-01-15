@@ -1,14 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"strings"
 	"time"
 )
 
 var (
-	words       = []string{"help", "test", "true"}
+	words       = []string{} // words to guess from
 	correctWord = ""
 	guesses     = []string{}
 )
@@ -23,10 +25,13 @@ func generatePuzzle() {
 
 func checkGuess(guess string) {
 	if guess == correctWord {
-		fmt.Println("Correct! You won!")
+		fmt.Println("┏━━━━━━━━━┓")
+		fmt.Println("┃ CORRECT ┃")
+		fmt.Println("┗━━━━━━━━━┛")
 	} else {
 		guesses = append(guesses, guess)
 		if len(guesses) > 0 {
+			fmt.Print("\033[H\033[2J")
 			fmt.Println("┏━━━━━━━━━━━━━┓")
 			fmt.Println("┃ OLD GUESSES ┃")
 			fmt.Println("┣━━━━━━━┳━━━━━┛")
@@ -45,16 +50,19 @@ func checkGuess(guess string) {
 			fmt.Println("┃ " + word + " ┃")
 		}
 		if len(guesses) > 0 {
-			fmt.Println("┗━━━━━━━┛\n")
+			fmt.Println("┗━━━━━━━┛")
 		}
 	}
 	//	fmt.Println()
 }
 
 func playGame() {
+	fmt.Print("\033[H\033[2J")
 	for i := 0; i < 6; i++ {
-		fmt.Print("\033[H\033[2J")
-		fmt.Print("┃ Guess a word: ")
+		fmt.Println("┏━━━━━━━┓")
+		fmt.Println("┃ GUESS ┃")
+		fmt.Println("┣━━━━━━━┛")
+		fmt.Print("┃ ")
 		var guess string
 		fmt.Scanln(&guess)
 		checkGuess(guess)
@@ -62,12 +70,20 @@ func playGame() {
 			break
 		}
 		if i == 5 {
-			fmt.Printf("Sorry, you lost. The word was %s\n", correctWord)
+			fmt.Println("┏━━━━━━━━━━┓")
+			fmt.Println("┃ YOU LOST ┃")
+			fmt.Println("┣━━━━━━━┳━━┛")
+			fmt.Println("┃ " + correctWord + " ┃")
+			fmt.Println("┗━━━━━━━┛")
 			break
 		}
 	}
 	var playAgain string
-	fmt.Print("Do you want to play again? (yes or no)")
+	fmt.Println("┏━━━━━━━━━━━━┓")
+	fmt.Println("┃ PLAY AGAIN ┃")
+	fmt.Println("┃ yes OR no  ┃")
+	fmt.Println("┣━━━━━━━━━━━━┛")
+	fmt.Print("┃ ")
 	fmt.Scanln(&playAgain)
 	if playAgain == "yes" {
 		generatePuzzle()
@@ -77,6 +93,15 @@ func playGame() {
 }
 
 func main() {
+	file, err := ioutil.ReadFile("words.json")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	if err := json.Unmarshal(file, &words); err != nil {
+		fmt.Println(err)
+		return
+	}
 	generatePuzzle()
 	playGame()
 }
