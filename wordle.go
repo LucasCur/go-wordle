@@ -5,12 +5,10 @@ import (
 	"math/rand"
 	"strings"
 	"time"
-
-	"github.com/fatih/color"
 )
 
 var (
-	words       = []string{"aaa", "bbb", "ccc", "ddd", "eee", "fff"}
+	words       = []string{"help", "test", "true"}
 	correctWord = ""
 	guesses     = []string{}
 )
@@ -28,41 +26,35 @@ func checkGuess(guess string) {
 		fmt.Println("Correct! You won!")
 	} else {
 		guesses = append(guesses, guess)
+		if len(guesses) > 0 {
+			fmt.Println("┏━━━━━━━━━━━━━┓")
+			fmt.Println("┃ OLD GUESSES ┃")
+			fmt.Println("┣━━━━━━━┳━━━━━┛")
+		}
 		for _, g := range guesses {
 			var word string
 			for i := range g {
 				if i < len(correctWord) && g[i] == correctWord[i] {
-					word += color.GreenString("%c", g[i])
+					word += "\033[32m" + strings.ToUpper(string(g[i])) + "\033[0m"
 				} else if strings.ContainsRune(correctWord, rune(g[i])) {
-					word += color.YellowString("%c", g[i])
+					word += "\033[33m" + strings.ToUpper(string(g[i])) + "\033[0m"
 				} else {
-					word += fmt.Sprintf("%c", g[i])
+					word += strings.ToUpper(string(g[i]))
 				}
 			}
-			fmt.Println(word)
+			fmt.Println("┃ " + word + " ┃")
+		}
+		if len(guesses) > 0 {
+			fmt.Println("┗━━━━━━━┛\n")
 		}
 	}
-	fmt.Println()
+	//	fmt.Println()
 }
 
 func playGame() {
-	color.NoColor = false
 	for i := 0; i < 6; i++ {
 		fmt.Print("\033[H\033[2J")
-		for _, g := range guesses {
-			var word string
-			for i := range g {
-				if i < len(correctWord) && g[i] == correctWord[i] {
-					word += color.GreenString("%c", g[i])
-				} else if strings.ContainsRune(correctWord, rune(g[i])) {
-					word += color.YellowString("%c", g[i])
-				} else {
-					word += fmt.Sprintf("%c", g[i])
-				}
-			}
-			fmt.Println(strings.ToUpper(word))
-		}
-		fmt.Print("Guess a word: ")
+		fmt.Print("┃ Guess a word: ")
 		var guess string
 		fmt.Scanln(&guess)
 		checkGuess(guess)
