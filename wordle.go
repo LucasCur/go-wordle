@@ -65,6 +65,13 @@ func playGame() {
 		fmt.Print("┃ ")
 		var guess string
 		fmt.Scanln(&guess)
+		if len(guess) != 5 {
+			fmt.Print("\033[H\033[2J")
+			fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+			fmt.Println("┃ Guess must be 5 letters long ┃")
+			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+			continue
+		}
 		checkGuess(guess)
 		if guess == correctWord {
 			break
