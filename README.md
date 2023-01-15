@@ -1,5 +1,5 @@
 ## 💻 Wordle
-- A CLI Wordle clone created in golang. I made this as my first golang project after roughly a day of experimentation so there's going to be lots of space for improvement.
+- A CLI Wordle clone created in golang. I made this as my first golang project after roughly a day of experimentation and learning the basics so there's going to be lots of space for improvement.
 
 - As ANSI escape codes are used for formatting, i.e. clearing the terminal & colors, it's recommended to use a terminal that supports them for the program to be usable, such as: 
   1. Windows Terminal
