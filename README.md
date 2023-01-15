@@ -17,4 +17,4 @@
 - Green - Letter does exist, and is in the correct place
 - Popup that says the game win / lose state as well as asking for confirmation of game continuance
 
-![image](https://user-images.githubusercontent.com/92184180/212538379-5bbfab07-6b8c-41bb-b84e-5ef84df0869e.png)
+![image](https://user-images.githubusercontent.com/92184180/212538486-a32f0457-65bf-402a-9501-31d6132d6255.png)
