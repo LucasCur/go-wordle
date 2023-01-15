@@ -39,7 +39,7 @@ func checkGuess(guess string) {
 					word += fmt.Sprintf("%c", g[i])
 				}
 			}
-			fmt.Println(strings.ToUpper(word))
+			fmt.Println(word)
 		}
 	}
 	fmt.Println()
@@ -75,14 +75,8 @@ func playGame() {
 		}
 	}
 	var playAgain string
-	for {
-		fmt.Print("Do you want to play again? (yes or no)")
-		fmt.Scanln(&playAgain)
-		if playAgain == "yes" || playAgain == "no" {
-			break
-		}
-		fmt.Println("Invalid input. Please enter either 'yes' or 'no'.")
-	}
+	fmt.Print("Do you want to play again? (yes or no)")
+	fmt.Scanln(&playAgain)
 	if playAgain == "yes" {
 		generatePuzzle()
 		guesses = []string{}
