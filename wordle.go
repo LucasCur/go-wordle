@@ -30,30 +30,34 @@ func checkGuess(guess string) {
 		fmt.Println("┗━━━━━━━━━┛")
 	} else {
 		guesses = append(guesses, guess)
-		if len(guesses) > 0 {
-			fmt.Print("\033[H\033[2J")
-			fmt.Println("┏━━━━━━━━━━━━━┓")
-			fmt.Println("┃ OLD GUESSES ┃")
-			fmt.Println("┣━━━━━━━┳━━━━━┛")
-		}
-		for _, g := range guesses {
-			var word string
-			for i := range g {
-				if i < len(correctWord) && g[i] == correctWord[i] {
-					word += "\033[32m" + strings.ToUpper(string(g[i])) + "\033[0m"
-				} else if strings.ContainsRune(correctWord, rune(g[i])) {
-					word += "\033[33m" + strings.ToUpper(string(g[i])) + "\033[0m"
-				} else {
-					word += strings.ToUpper(string(g[i]))
-				}
-			}
-			fmt.Println("┃ " + word + " ┃")
-		}
-		if len(guesses) > 0 {
-			fmt.Println("┗━━━━━━━┛")
-		}
+		dispGuesses()
 	}
 	//	fmt.Println()
+}
+
+func dispGuesses() {
+	if len(guesses) > 0 {
+		fmt.Print("\033[H\033[2J")
+		fmt.Println("┏━━━━━━━━━━━━━┓")
+		fmt.Println("┃ OLD GUESSES ┃")
+		fmt.Println("┣━━━━━━━┳━━━━━┛")
+	}
+	for _, g := range guesses {
+		var word string
+		for i := range g {
+			if i < len(correctWord) && g[i] == correctWord[i] {
+				word += "\033[32m" + strings.ToUpper(string(g[i])) + "\033[0m"
+			} else if strings.ContainsRune(correctWord, rune(g[i])) {
+				word += "\033[33m" + strings.ToUpper(string(g[i])) + "\033[0m"
+			} else {
+				word += strings.ToUpper(string(g[i]))
+			}
+		}
+		fmt.Println("┃ " + word + " ┃")
+	}
+	if len(guesses) > 0 {
+		fmt.Println("┗━━━━━━━┛")
+	}
 }
 
 func playGame() {
@@ -70,6 +74,15 @@ func playGame() {
 			fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
 			fmt.Println("┃ Guess must be 5 letters long ┃")
 			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+			dispGuesses()
+			continue
+		}
+		if !isValidGuess(guess) {
+			fmt.Print("\033[H\033[2J")
+			fmt.Println("┏━━━━━━━━━━━━━━━┓")
+			fmt.Println("┃ Invalid guess ┃")
+			fmt.Println("┗━━━━━━━━━━━━━━━┛")
+			dispGuesses()
 			continue
 		}
 		checkGuess(guess)
@@ -97,6 +110,15 @@ func playGame() {
 		guesses = []string{}
 		playGame()
 	}
+}
+
+func isValidGuess(guess string) bool {
+	for _, w := range words {
+		if guess == w {
+			return true
+		}
+	}
+	return false
 }
 
 func main() {
