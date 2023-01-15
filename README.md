@@ -12,10 +12,9 @@
 
 ## User Interface
 
-- Key to show what each symbol means
-- Counter to show how many tries left and on what try you won or lost
-- Section displaying the word tried and what characters are correct / in correct place etc.
+- White - Letter does not exist in target word
+- Yellow - Letter does exist, however is in the wrong place
+- Green - Letter does exist, and is in the correct place
+- Popup that says the game win / lose state as well as asking for confirmation of game continuance
 
-![image](https://user-images.githubusercontent.com/92184180/201767391-c6d26ed1-b137-4f1b-9216-392e222a90e7.png)
-![image](https://user-images.githubusercontent.com/92184180/201769744-bf64ace4-1053-4da1-b9b9-4f78741dac1b.png)
-![image](https://user-images.githubusercontent.com/92184180/201768398-43584da6-d140-45a6-9f07-71e8a7e51f96.png)
+![image](https://user-images.githubusercontent.com/92184180/212538379-5bbfab07-6b8c-41bb-b84e-5ef84df0869e.png)
