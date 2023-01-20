@@ -35,7 +35,6 @@ func checkGuess(guess string) {
 
 func dispGuesses() {
 	if len(guesses) > 0 {
-		fmt.Print("\033[H\033[2J")
 		fmt.Println("┏━━━━━━━━━━━━━┓")
 		fmt.Println("┃ OLD GUESSES ┃")
 		fmt.Println("┣━━━━━━━┳━━━━━┛")
@@ -77,7 +76,9 @@ func playGame() {
 			dispGuesses()
       i -= 1
 			continue
-		}
+		} else { 
+		  fmt.Print("\033[H\033[2J")
+    }
 		checkGuess(guess)
 		if guess == correctWord {
 			break
