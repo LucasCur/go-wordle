@@ -25,9 +25,7 @@ func generatePuzzle() {
 
 func checkGuess(guess string) {
 	if guess == correctWord {
-		fmt.Println("┏━━━━━━━━━┓")
-		fmt.Println("┃ CORRECT ┃")
-		fmt.Println("┗━━━━━━━━━┛")
+		userprompt("CORRECT")
 	} else {
 		guesses = append(guesses, guess)
 		dispGuesses()
@@ -63,25 +61,18 @@ func dispGuesses() {
 func playGame() {
 	fmt.Print("\033[H\033[2J")
 	for i := 0; i < 6; i++ {
-		fmt.Println("┏━━━━━━━┓")
-		fmt.Println("┃ GUESS ┃")
-		fmt.Println("┣━━━━━━━┛")
-		fmt.Print("┃ ")
+		userquery("GUESS")
 		var guess string
 		fmt.Scanln(&guess)
 		if len(guess) != 5 {
 			fmt.Print("\033[H\033[2J")
-			fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-			fmt.Println("┃ Guess must be 5 letters long ┃")
-			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+			userprompt("GUESS MUST BE 5 LETTERS LONG")
 			dispGuesses()
 			continue
 		}
 		if !isValidGuess(guess) {
 			fmt.Print("\033[H\033[2J")
-			fmt.Println("┏━━━━━━━━━━━━━━━┓")
-			fmt.Println("┃ Invalid guess ┃")
-			fmt.Println("┗━━━━━━━━━━━━━━━┛")
+			userprompt("INVALID GUESS")
 			dispGuesses()
 			continue
 		}
@@ -99,11 +90,7 @@ func playGame() {
 		}
 	}
 	var playAgain string
-	fmt.Println("┏━━━━━━━━━━━━┓")
-	fmt.Println("┃ PLAY AGAIN ┃")
-	fmt.Println("┃ yes OR no  ┃")
-	fmt.Println("┣━━━━━━━━━━━━┛")
-	fmt.Print("┃ ")
+	userqueryml("PLAY AGAIN", "yes OR no")
 	fmt.Scanln(&playAgain)
 	if playAgain == "yes" {
 		generatePuzzle()
@@ -133,4 +120,45 @@ func main() {
 	}
 	generatePuzzle()
 	playGame()
+}
+
+//Functions to handle displaying the impractical user interface boxes
+
+func userprompt(content string) {
+	fmt.Println("┏" + strings.Repeat("━", len(content)+2) + "┓")
+	fmt.Println("┃ " + content + " ┃")
+	fmt.Println("┗" + strings.Repeat("━", len(content)+2) + "┛")
+}
+func userquery(content string) {
+	fmt.Println("┏" + strings.Repeat("━", len(content)+2) + "┓")
+	fmt.Println("┃ " + content + " ┃")
+	fmt.Println("┣" + strings.Repeat("━", len(content)+2) + "┛")
+	fmt.Print("┃ ")
+}
+func userqueryml(content string, contentext string) {
+	if len(contentext) == len(content) {
+		fmt.Println("┏" + strings.Repeat("━", len(content)+2) + "┓")
+		fmt.Println("┃ " + content + " ┃")
+		fmt.Println("┃ " + contentext + " ┃")
+		fmt.Println("┣" + strings.Repeat("━", len(content)+2) + "┛")
+		fmt.Print("┃ ")
+	} else {
+		if len(contentext) > len(content) {
+			targlen := len(contentext)
+			remainderlen := len(contentext) - len(content)
+			fmt.Println("┏" + strings.Repeat("━", targlen+2) + "┓")
+			fmt.Println("┃ " + content + strings.Repeat(" ", remainderlen) + " ┃")
+			fmt.Println("┃ " + contentext + " ┃")
+			fmt.Println("┣" + strings.Repeat("━", targlen+2) + "┛")
+			fmt.Print("┃ ")
+		} else {
+			targlen := len(content)
+			remainderlen := len(content) - len(contentext)
+			fmt.Println("┏" + strings.Repeat("━", targlen+2) + "┓")
+			fmt.Println("┃ " + content + " ┃")
+			fmt.Println("┃ " + contentext + strings.Repeat(" ", remainderlen) + " ┃")
+			fmt.Println("┣" + strings.Repeat("━", targlen+2) + "┛")
+			fmt.Print("┃ ")
+		}
+	}
 }
