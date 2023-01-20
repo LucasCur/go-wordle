@@ -30,7 +30,6 @@ func checkGuess(guess string) {
 		guesses = append(guesses, guess)
 		dispGuesses()
 	}
-	//	fmt.Println()
 }
 
 func dispGuesses() {
