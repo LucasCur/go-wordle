@@ -68,12 +68,14 @@ func playGame() {
 			fmt.Print("\033[H\033[2J")
 			userprompt("GUESS MUST BE 5 LETTERS LONG")
 			dispGuesses()
+      i -= 1
 			continue
 		}
 		if !isValidGuess(guess) {
 			fmt.Print("\033[H\033[2J")
 			userprompt("INVALID GUESS")
 			dispGuesses()
+      i -= 1
 			continue
 		}
 		checkGuess(guess)
